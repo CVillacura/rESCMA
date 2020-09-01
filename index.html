@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>Effect Size Converter</title>
+</head>
+<body>
+<h1 class="text-center bg-primary text-light py-2">Effect Size Converter</h1>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="base_effect_size">Convert From</label>
+                <select id="base_effect_size" class="custom-select">
+                    <option value="correlation_coefficient">Correlation Coefficient ( r )</option>
+                    <option value="standardized_mean_difference">Standardized Mean Difference ( d )</option>
+                    <option value="odds_ratio">Odds Ratio ( OR )</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="effect_input">Effect size</label>
+                <input id="effect_input" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="sample_size">n</label>
+                <input id="sample_size" class="form-control" type="text">
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-light py-5">
+        <div class="form-group row justify-content-center">
+            <label for="output_correlation_coefficient" class="col-5 col-form-label">Correlation coefficient ( r
+                )</label>
+            <div class="col-5">
+                <input type="text" readonly class="form-control form-control-sm" id="output_correlation_coefficient">
+            </div>
+        </div>
+
+        <div class="form-group row justify-content-center">
+            <label for="output_variance_of_r" class="col-5 col-form-label">Variance of r</label>
+            <div class="col-5">
+                <input type="text" readonly class="form-control form-control-sm" id="output_variance_of_r">
+            </div>
+        </div>
+
+        <div class="form-group row justify-content-center">
+            <label for="output_standardized_mean_difference" class="col-5 col-form-label">Standardized mean difference (
+                d
+                )</label>
+            <div class="col-5">
+                <input type="text" readonly class="form-control form-control-sm"
+                       id="output_standardized_mean_difference">
+            </div>
+        </div>
+
+        <div class="form-group row justify-content-center">
+            <label for="output_variance_of_d" class="col-5 col-form-label">Variance of d</label>
+            <div class="col-5">
+                <input type="text" readonly class="form-control form-control-sm" id="output_variance_of_d">
+            </div>
+        </div>
+
+        <div class="form-group row justify-content-center">
+            <label for="output_odds_ratio" class="col-5 col-form-label">Odds Ratio ( OR )</label>
+            <div class="col-5">
+                <input type="text" readonly class="form-control form-control-sm" id="output_odds_ratio">
+            </div>
+        </div>
+
+        <div class="form-group row justify-content-center">
+            <label for="output_natural_logarith_of_the_odds_ratio" class="col-5 col-form-label">Natural Logarith of the
+                Odds
+                Ratio (LnOR)</label>
+            <div class="col-5">
+                <input type="text" readonly class="form-control form-control-sm"
+                       id="output_natural_logarith_of_the_odds_ratio">
+            </div>
+        </div>
+
+        <div class="form-group row justify-content-center">
+            <label for="output_variance_of_lnor" class="col-5 col-form-label">Variance of LnOR</label>
+            <div class="col-5">
+                <input type="text" readonly class="form-control form-control-sm"
+                       id="output_variance_of_lnor">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+<script>
+    var base_effect_size = document.getElementById('base_effect_size');
+
+    var effect_input = document.getElementById('effect_input');
+    var sample_size = document.getElementById('sample_size');
+
+    var output_correlation_coefficient = document.getElementById('output_correlation_coefficient');
+    var output_variance_of_r = document.getElementById('output_variance_of_r');
+    var output_standardized_mean_difference = document.getElementById('output_standardized_mean_difference');
+    var output_natural_logarith_of_the_odds_ratio = document.getElementById('output_natural_logarith_of_the_odds_ratio');
+    var output_variance_of_d = document.getElementById('output_variance_of_d');
+    var output_odds_ratio = document.getElementById('output_odds_ratio');
+    var output_variance_of_lnor = document.getElementById('output_variance_of_lnor');
+
+    function recalculate(changed_affect_size = false) {
+        if (effect_input.value !== '') {
+            switch (base_effect_size.value) {
+                case 'correlation_coefficient':
+                    if (changed_affect_size === true) {
+                        effect_input.value = output_correlation_coefficient.value;
+                    }
+                    output_correlation_coefficient.value = effect_input.value;
+                    output_variance_of_r.value = (((1 - (effect_input.value * effect_input.value)) * (1 - (effect_input.value * effect_input.value))) / ((sample_size.value) - 1)).toFixed(10);
+                    output_natural_logarith_of_the_odds_ratio.value = (1.81379936423434 * ((2 * output_correlation_coefficient.value) / (Math.sqrt(1 - (output_correlation_coefficient.value * output_correlation_coefficient.value))))).toFixed(10);
+                    output_standardized_mean_difference.value = ((output_natural_logarith_of_the_odds_ratio.value) * 0.551328895421756).toFixed(10);
+                    output_variance_of_d.value = ((4 * output_variance_of_r.value) / ((1 - (output_correlation_coefficient.value * output_correlation_coefficient.value)) ** 3)).toFixed(10);
+                    output_odds_ratio.value = (Math.exp(output_natural_logarith_of_the_odds_ratio.value)).toFixed(10);
+                    output_variance_of_lnor.value = (output_variance_of_d.value * ((3.14159265359 * 3.14159265359) / 3)).toFixed(10);
+                    return;
+
+                case 'standardized_mean_difference':
+                    if (changed_affect_size === true) {
+                        effect_input.value = output_standardized_mean_difference.value;
+                    }
+                    output_correlation_coefficient.value = ((effect_input.value) / (Math.sqrt((effect_input.value * effect_input.value) + 4))).toFixed(10);
+                    output_variance_of_r.value = (((1 - (output_correlation_coefficient.value * output_correlation_coefficient.value)) * (1 - (output_correlation_coefficient.value * output_correlation_coefficient.value))) / ((sample_size.value) - 1)).toFixed(10);
+                    output_standardized_mean_difference.value = effect_input.value;
+                    output_natural_logarith_of_the_odds_ratio.value = (1.81379936423434 * ((2 * output_correlation_coefficient.value) / (Math.sqrt(1 - (output_correlation_coefficient.value * output_correlation_coefficient.value))))).toFixed(10);
+                    output_variance_of_d.value = ((4 * output_variance_of_r.value) / ((1 - (output_correlation_coefficient.value * output_correlation_coefficient.value)) * (1 - (output_correlation_coefficient.value * output_correlation_coefficient.value)) * (1 - (output_correlation_coefficient.value * output_correlation_coefficient.value)))).toFixed(10);
+                    output_odds_ratio.value = (Math.exp(output_natural_logarith_of_the_odds_ratio.value)).toFixed(10);
+                    output_variance_of_lnor.value = (output_variance_of_d.value * ((3.14159265359 * 3.14159265359) / 3)).toFixed(10);
+                    return;
+
+                case 'odds_ratio':
+                    if (changed_affect_size === true) {
+                        effect_input.value = output_odds_ratio.value;
+                    }
+                    output_correlation_coefficient.value = (((output_natural_logarith_of_the_odds_ratio.value * 0.551328895421756)) / Math.sqrt((output_natural_logarith_of_the_odds_ratio.value * 0.551328895421756) * (output_natural_logarith_of_the_odds_ratio.value * 0.551328895421756) + 4)).toFixed(10);
+                    output_variance_of_r.value = (((1 - (output_correlation_coefficient.value * output_correlation_coefficient.value)) * (1 - (output_correlation_coefficient.value * output_correlation_coefficient.value))) / ((sample_size.value) - 1)).toFixed(10);
+                    output_natural_logarith_of_the_odds_ratio.value = Math.log(effect_input.value).toFixed(10);
+                    output_standardized_mean_difference.value = ((output_natural_logarith_of_the_odds_ratio.value) * 0.551328895421756).toFixed(10);
+                    output_variance_of_d.value = ((4 * output_variance_of_r.value) / ((1 - (output_correlation_coefficient.value * output_correlation_coefficient.value)) ** 3)).toFixed(10);
+                    output_odds_ratio.value = (Math.exp(output_natural_logarith_of_the_odds_ratio.value)).toFixed(10);
+                    output_variance_of_lnor.value = (output_variance_of_d.value * ((3.14159265359 * 3.14159265359) / 3)).toFixed(10);
+                    return;
+            }
+        }
+    }
+
+    effect_input.oninput = function () {
+        recalculate()
+    }
+    sample_size.oninput = function () {
+        recalculate()
+    }
+    base_effect_size.oninput = function () {
+        recalculate(true)
+    }
+</script>
+</body>
+</html>
