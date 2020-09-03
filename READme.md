@@ -1,6 +1,6 @@
-<header>rESCMA</header>
+# rESCMA
 
-rESCMA is a Rapid Effect Size Converter for Meta-Analysis developed with the objective of facilitate conversion and retro-conversion between the three main effect sizes used in Meta-Analysis: the correlation coefficient (<i>r</i>), the standardized mean difference (<i>d</i>) and the Odds Ratio (<i>OR</i>).
+<b>rESCMA</b> is a <b>R</b>apid <b>E</b>ffect <b>S</b>ize <b>C</b>onverter for <b>M</b>eta-<b>A</b>nalysis developed with the objective of facilitate conversion and retro-conversion between the three main effect sizes used in Meta-Analysis: the correlation coefficient (<i>r</i>), the standardized mean difference (<i>d</i>) and the Odds Ratio (<i>OR</i>).
 
 
 <b>Please reference this as:</b>
