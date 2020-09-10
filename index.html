@@ -6,189 +6,175 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
 
-    <style></style>
+    <style>
+        @font-face {
+            font-family: "now";
+            src: url("static/font/Now-Regular.otf");
+        }
+
+        * {
+            font-family: now;
+            color: #313131;
+        }
+
+        .form-control:disabled, .form-control[readonly] {
+            background-color: transparent;
+        }
+    </style>
 
     <title>Effect Size Converter</title>
 </head>
 <body>
-<h1 class="text-center bg-primary text-light py-2">Effect Size Converter</h1>
-<div class="container">
-    <div class="bg-light p-3 d-inline-block rounded">
-        <p class="text-center">Process Mode</p>
-        <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="mode_single" class="custom-control-input" onchange="toggle_single_mode()" checked>
-            <label class="custom-control-label" for="mode_single">Single</label>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            <div class="text-center">
+                <a href="/">
+                    <img src="static/images/rESCMA logo trans.png" class="w-50">
+                </a>
+            </div>
+            <h1 class="h3 mt-5">
+                <span>Data input</span>
+                <span class="float-right">
+                    <a href="/" class="btn btn-dark">Single</a>
+                    <a href="/bulk.html" class="btn btn-outline-dark">Bulk</a>
+                </span>
+            </h1>
+            <div class="border-top border-dark" style="border-width: medium!important;"></div>
+
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="form-group text-center">
+                        <label for="base_effect_size">Convert from</label>
+                        <select id="base_effect_size" class="custom-select">
+                            <option value="correlation_coefficient">Correlation Coefficient ( r )</option>
+                            <option value="standardized_mean_difference">Standardized Mean Difference ( d )</option>
+                            <option value="odds_ratio">Odds Ratio ( OR )</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group text-center">
+                        <label for="effect_input">Effect size</label>
+                        <input id="effect_input" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group text-center">
+                        <label for="sample_size">Sample size</label>
+                        <input id="sample_size" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+
+            <h1 class="h3 mt-5 pb-1">
+                <span>Data output</span>
+                <button id="copy_string" class="btn btn-dark rounded-pill px-5 float-right" data-clipboard-text="">Copy</button>
+            </h1>
+            <div class="border-top border-dark" style="border-width: medium!important;"></div>
+
+            <div class="mt-4">
+                <div class="row">
+                    <label for="output_correlation_coefficient" class="col-6 col-sm-7 col-md-8 col-lg-9 col-form-label">Correlation
+                        coefficient ( r
+                        )</label>
+                    <div class="col-6 col-sm-5 col-md-4 col-lg-3">
+                        <input type="text" readonly="" class="form-control form-control-sm"
+                               id="output_correlation_coefficient">
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <label for="output_variance_of_r" class="col-6 col-sm-7 col-md-8 col-lg-9 col-form-label">Variance
+                        of r</label>
+                    <div class="col-6 col-sm-5 col-md-4 col-lg-3">
+                        <input type="text" readonly="" class="form-control form-control-sm" id="output_variance_of_r">
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <label for="output_standardized_mean_difference"
+                           class="col-6 col-sm-7 col-md-8 col-lg-9 col-form-label">Standardized mean
+                        difference (
+                        d
+                        )</label>
+                    <div class="col-6 col-sm-5 col-md-4 col-lg-3">
+                        <input type="text" readonly="" class="form-control form-control-sm"
+                               id="output_standardized_mean_difference">
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <label for="output_variance_of_d" class="col-6 col-sm-7 col-md-8 col-lg-9 col-form-label">Variance
+                        of d</label>
+                    <div class="col-6 col-sm-5 col-md-4 col-lg-3">
+                        <input type="text" readonly="" class="form-control form-control-sm" id="output_variance_of_d">
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <label for="output_odds_ratio" class="col-6 col-sm-7 col-md-8 col-lg-9 col-form-label">Odds Ratio (
+                        OR )</label>
+                    <div class="col-6 col-sm-5 col-md-4 col-lg-3">
+                        <input type="text" readonly="" class="form-control form-control-sm" id="output_odds_ratio">
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <label for="output_natural_logarith_of_the_odds_ratio"
+                           class="col-6 col-sm-7 col-md-8 col-lg-9 col-form-label">Natural Logarith
+                        of
+                        the
+                        Odds
+                        Ratio (LnOR)</label>
+                    <div class="col-6 col-sm-5 col-md-4 col-lg-3">
+                        <input type="text" readonly="" class="form-control form-control-sm"
+                               id="output_natural_logarith_of_the_odds_ratio">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label for="output_variance_of_lnor" class="col-6 col-sm-7 col-md-8 col-lg-9 col-form-label">Variance
+                        of LnOR</label>
+                    <div class="col-6 col-sm-5 col-md-4 col-lg-3">
+                        <input type="text" readonly="" class="form-control form-control-sm"
+                               id="output_variance_of_lnor">
+                    </div>
+                </div>
+            </div>
+
+            <footer class="mt-5">
+                <small>Villacura-Herr, C & Kenner, N. (2020). rESCMA: A brief summary on the conversion of effect sizes
+                    for meta-analysis. ArXiv.</small>
+            </footer>
         </div>
-        <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="mode_bulk" class="custom-control-input" onchange="toggle_bulk_mode()">
-            <label class="custom-control-label" for="mode_bulk">Bulk</label>
+        <div class="col-4 d-none d-lg-block text-center my-auto">
+            <img src="static/images/ForestPlot_Trans.png" class="w-100">
         </div>
+
+
     </div>
-    <div id="mode_single_container">
-        <div class="row mt-5">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="base_effect_size">Convert From</label>
-                    <select id="base_effect_size" class="custom-select">
-                        <option value="correlation_coefficient">Correlation Coefficient ( r )</option>
-                        <option value="standardized_mean_difference">Standardized Mean Difference ( d )</option>
-                        <option value="odds_ratio">Odds Ratio ( OR )</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="effect_input">Effect size</label>
-                    <input id="effect_input" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="sample_size">n</label>
-                    <input id="sample_size" class="form-control" type="text">
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-light py-5">
-            <div class="row justify-content-center">
-                <label for="output_correlation_coefficient" class="col-5 col-form-label">Correlation coefficient ( r
-                    )</label>
-                <div class="col-5">
-                    <input type="text" readonly class="form-control form-control-sm"
-                           id="output_correlation_coefficient">
-                </div>
-            </div>
-
-            <div class="row justify-content-center">
-                <label for="output_variance_of_r" class="col-5 col-form-label">Variance of r</label>
-                <div class="col-5">
-                    <input type="text" readonly class="form-control form-control-sm" id="output_variance_of_r">
-                </div>
-            </div>
-
-            <div class="row justify-content-center">
-                <label for="output_standardized_mean_difference" class="col-5 col-form-label">Standardized mean
-                    difference (
-                    d
-                    )</label>
-                <div class="col-5">
-                    <input type="text" readonly class="form-control form-control-sm"
-                           id="output_standardized_mean_difference">
-                </div>
-            </div>
-
-            <div class="row justify-content-center">
-                <label for="output_variance_of_d" class="col-5 col-form-label">Variance of d</label>
-                <div class="col-5">
-                    <input type="text" readonly class="form-control form-control-sm" id="output_variance_of_d">
-                </div>
-            </div>
-
-            <div class="row justify-content-center">
-                <label for="output_odds_ratio" class="col-5 col-form-label">Odds Ratio ( OR )</label>
-                <div class="col-5">
-                    <input type="text" readonly class="form-control form-control-sm" id="output_odds_ratio">
-                </div>
-            </div>
-
-            <div class="row justify-content-center">
-                <label for="output_natural_logarith_of_the_odds_ratio" class="col-5 col-form-label">Natural Logarith of
-                    the
-                    Odds
-                    Ratio (LnOR)</label>
-                <div class="col-5">
-                    <input type="text" readonly class="form-control form-control-sm"
-                           id="output_natural_logarith_of_the_odds_ratio">
-                </div>
-            </div>
-
-            <div class="row justify-content-center">
-                <label for="output_variance_of_lnor" class="col-5 col-form-label">Variance of LnOR</label>
-                <div class="col-5">
-                    <input type="text" readonly class="form-control form-control-sm"
-                           id="output_variance_of_lnor">
-                </div>
-            </div>
-
-            <div class="mt-3 text-center">
-                <button id="copy_string" class="btn btn-primary" data-clipboard-text="">Copy to Clipboard</button>
-            </div>
-        </div>
-    </div>
-
-
-    <div id="mode_bulk_container" class="d-none">
-        <div class="form-group mt-5">
-            <label for="bulk_convert_from">Convert From</label>
-            <select id="bulk_convert_from" class="custom-select">
-                <option value="correlation_coefficient">Correlation Coefficient ( r )</option>
-                <option value="standardized_mean_difference">Standardized Mean Difference ( d )</option>
-                <option value="odds_ratio">Odds Ratio ( OR )</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="bulk_input">Effect and Sample Sizes<br><small>Paste from Excel</small></label>
-            <textarea class="form-control" id="bulk_input" rows="3"></textarea>
-        </div>
-
-        <div class="my-3">
-            <button id="bulk_copy_button" class="btn btn-primary" data-clipboard-text="">Copy to Clipboard</button>
-        </div>
-
-        <div>
-            <table class="table table-sm table-striped">
-                <thead>
-                <th>Correlation coefficient ( r )</th>
-                <th>Variance of r</th>
-                <th>Standardized mean difference ( d )</th>
-                <th>Variance of d</th>
-                <th>Odds Ratio ( OR )</th>
-                <th>Natural Logarith of the Odds Ratio (LnOR)</th>
-                <th>Variance of LnOR</th>
-                </thead>
-                <tbody id="table_container">
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-
 </div>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-        crossorigin="anonymous"></script>
+<script src="static/jquery/jquery-3.5.1.slim.min.js"></script>
+<script src="static/popper/popper.min.js"></script>
+<script src="static/bootstrap/js/bootstrap.min.js"></script>
 
-<!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+<!-- Clipboard.js -->
+<script src="static/clipboard/clipboard.min.js"></script>
 
 <script>
     new ClipboardJS('.btn');
-
-    var mode_single = document.getElementById('mode_single');
-    var mode_bulk = document.getElementById('mode_bulk');
-
-    var mode_single_container = document.getElementById('mode_single_container');
-    var mode_bulk_container = document.getElementById('mode_bulk_container');
 
     var base_effect_size = document.getElementById('base_effect_size');
 
     var effect_input = document.getElementById('effect_input');
     var sample_size = document.getElementById('sample_size');
-
-    var bulk_input = document.getElementById('bulk_input');
 
     var output_correlation_coefficient = document.getElementById('output_correlation_coefficient');
     var output_variance_of_r = document.getElementById('output_variance_of_r');
@@ -199,158 +185,6 @@
     var output_variance_of_lnor = document.getElementById('output_variance_of_lnor');
 
     var copy_string = document.getElementById('copy_string');
-    var bulk_copy_button = document.getElementById('bulk_copy_button');
-
-    var table_container = document.getElementById('table_container');
-
-    var bulk_convert_from = document.getElementById('bulk_convert_from');
-
-    function toggle_bulk_mode() {
-        mode_bulk_container.classList.remove('d-none');
-        mode_single_container.classList.add('d-none');
-        mode_bulk.checked = true;
-        mode_single.checked = false;
-    }
-
-    function toggle_single_mode() {
-        mode_single_container.classList.remove('d-none');
-        mode_bulk_container.classList.add('d-none');
-        mode_single.checked = true;
-        mode_bulk.checked = false;
-    }
-
-    function process_bulk_input() {
-        table_container.innerText = '';
-        var effect_size_input_array = bulk_input.value.split('\n');
-        var effect_size_input_array_new = [];
-        effect_size_input_array.forEach(function (effect_size_input) {
-            effect_size_input_array_new.push(effect_size_input.split('\t'));
-        });
-
-        var table = document.createElement('table');
-
-        var tr = document.createElement('tr');
-
-        var thead_th = document.createElement('th');
-        thead_th.appendChild(document.createTextNode('r'))
-        tr.appendChild(thead_th);
-        var thead_th = document.createElement('th');
-        thead_th.appendChild(document.createTextNode('VAR_r'))
-        tr.appendChild(thead_th);
-        var thead_th = document.createElement('th');
-        thead_th.appendChild(document.createTextNode('d'))
-        tr.appendChild(thead_th);
-        var thead_th = document.createElement('th');
-        thead_th.appendChild(document.createTextNode('VAR_d'))
-        tr.appendChild(thead_th);
-        var thead_th = document.createElement('th');
-        thead_th.appendChild(document.createTextNode('OR'))
-        tr.appendChild(thead_th);
-        var thead_th = document.createElement('th');
-        thead_th.appendChild(document.createTextNode('LnOR'))
-        tr.appendChild(thead_th);
-        var thead_th = document.createElement('th');
-        thead_th.appendChild(document.createTextNode('VAR_LnOR'))
-        tr.appendChild(thead_th);
-
-        table.appendChild(tr);
-
-        effect_size_input_array_new.forEach(function (effect_size_input) {
-            if (bulk_convert_from.value === 'correlation_coefficient') {
-                var processed_data = process_from_correlation_coefficient(effect_size_input[0], effect_size_input[1]);
-            } else if (bulk_convert_from.value === 'standardized_mean_difference') {
-                var processed_data = process_from_standardized_mean_difference(effect_size_input[0], effect_size_input[1]);
-            } else if (bulk_convert_from.value === 'odds_ratio') {
-                var processed_data = process_from_odds_ratio(effect_size_input[0], effect_size_input[1]);
-            }
-            console.log(processed_data);
-            console.log(processed_data[0]);
-            var tr = document.createElement('tr');
-
-            var td = document.createElement('td');
-
-            var text_node = document.createTextNode(processed_data[0])
-            td.appendChild(text_node);
-            tr.appendChild(td);
-
-            var td = document.createElement('td');
-
-            var text_node = document.createTextNode(processed_data[1])
-            td.appendChild(text_node);
-            tr.appendChild(td);
-
-            var td = document.createElement('td');
-
-            var text_node = document.createTextNode(processed_data[2])
-            td.appendChild(text_node);
-            tr.appendChild(td);
-
-            var td = document.createElement('td');
-
-            var text_node = document.createTextNode(processed_data[3])
-            td.appendChild(text_node);
-            tr.appendChild(td);
-
-            var td = document.createElement('td');
-
-            var text_node = document.createTextNode(processed_data[4])
-            td.appendChild(text_node);
-            tr.appendChild(td);
-
-            var td = document.createElement('td');
-
-            var text_node = document.createTextNode(processed_data[5])
-            td.appendChild(text_node);
-            tr.appendChild(td);
-
-            var td = document.createElement('td');
-
-            var text_node = document.createTextNode(processed_data[6]);
-            td.appendChild(text_node);
-            tr.appendChild(td);
-
-            table_container.appendChild(tr.cloneNode(true));
-            table.appendChild(tr.cloneNode(true));
-        })
-        bulk_copy_button.setAttribute('data-clipboard-text', table.outerHTML);
-    }
-
-    function process_from_correlation_coefficient(effect_size, sample_size) {
-
-        const output_correlation_coefficient = effect_size;
-        const output_variance_of_r = (((1 - (effect_size * effect_size)) * (1 - (effect_size * effect_size))) / ((sample_size) - 1)).toFixed(10);
-        const output_natural_logarith_of_the_odds_ratio = (1.81379936423434 * ((2 * output_correlation_coefficient) / (Math.sqrt(1 - (output_correlation_coefficient * output_correlation_coefficient))))).toFixed(10);
-        const output_standardized_mean_difference = ((output_natural_logarith_of_the_odds_ratio) * 0.551328895421756).toFixed(10);
-        const output_variance_of_d = ((4 * output_variance_of_r) / ((1 - (output_correlation_coefficient * output_correlation_coefficient)) ** 3)).toFixed(10);
-        const output_odds_ratio = (Math.exp(output_natural_logarith_of_the_odds_ratio)).toFixed(10);
-        const output_variance_of_lnor = (output_variance_of_d * ((3.14159265359 * 3.14159265359) / 3)).toFixed(10);
-        return [output_correlation_coefficient, output_variance_of_r, output_standardized_mean_difference, output_variance_of_d, output_odds_ratio, output_natural_logarith_of_the_odds_ratio, output_variance_of_lnor]
-    }
-
-    function process_from_standardized_mean_difference(effect_size, sample_size) {
-
-        const output_correlation_coefficient = ((effect_size) / (Math.sqrt((effect_size * effect_size) + 4))).toFixed(10);
-        const output_variance_of_r = (((1 - (output_correlation_coefficient * output_correlation_coefficient)) * (1 - (output_correlation_coefficient * output_correlation_coefficient))) / ((sample_size) - 1)).toFixed(10);
-        const output_standardized_mean_difference = effect_size;
-        const output_natural_logarith_of_the_odds_ratio = (1.81379936423434 * ((2 * output_correlation_coefficient) / (Math.sqrt(1 - (output_correlation_coefficient * output_correlation_coefficient))))).toFixed(10);
-        const output_variance_of_d = ((4 * output_variance_of_r) / ((1 - (output_correlation_coefficient * output_correlation_coefficient)) * (1 - (output_correlation_coefficient * output_correlation_coefficient)) * (1 - (output_correlation_coefficient * output_correlation_coefficient)))).toFixed(10);
-        const output_odds_ratio = (Math.exp(output_natural_logarith_of_the_odds_ratio)).toFixed(10);
-        const output_variance_of_lnor = (output_variance_of_d * ((3.14159265359 * 3.14159265359) / 3)).toFixed(10);
-
-        return [output_correlation_coefficient, output_variance_of_r, output_standardized_mean_difference, output_variance_of_d, output_odds_ratio, output_natural_logarith_of_the_odds_ratio, output_variance_of_lnor]
-    }
-
-    function process_from_odds_ratio(effect_size, sample_size) {
-
-        const output_natural_logarith_of_the_odds_ratio = Math.log(effect_size).toFixed(10);
-        const output_correlation_coefficient = (((output_natural_logarith_of_the_odds_ratio * 0.551328895421756)) / Math.sqrt((output_natural_logarith_of_the_odds_ratio * 0.551328895421756) * (output_natural_logarith_of_the_odds_ratio * 0.551328895421756) + 4)).toFixed(10);
-        const output_variance_of_r = (((1 - (output_correlation_coefficient * output_correlation_coefficient)) * (1 - (output_correlation_coefficient * output_correlation_coefficient))) / ((sample_size) - 1)).toFixed(10);
-        const output_standardized_mean_difference = ((output_natural_logarith_of_the_odds_ratio) * 0.551328895421756).toFixed(10);
-        const output_variance_of_d = ((4 * output_variance_of_r) / ((1 - (output_correlation_coefficient * output_correlation_coefficient)) ** 3)).toFixed(10);
-        const output_odds_ratio = (Math.exp(output_natural_logarith_of_the_odds_ratio)).toFixed(10);
-        const output_variance_of_lnor = (output_variance_of_d * ((3.14159265359 * 3.14159265359) / 3)).toFixed(10);
-        return [output_correlation_coefficient, output_variance_of_r, output_standardized_mean_difference, output_variance_of_d, output_odds_ratio, output_natural_logarith_of_the_odds_ratio, output_variance_of_lnor]
-    }
 
     function recalculate(changed_affect_size = false) {
         if (effect_input.value !== '') {
@@ -406,12 +240,6 @@
     }
     base_effect_size.oninput = function () {
         recalculate(true)
-    }
-    bulk_input.oninput = function () {
-        process_bulk_input()
-    }
-    bulk_convert_from.oninput = function () {
-        process_bulk_input()
     }
 
 </script>
