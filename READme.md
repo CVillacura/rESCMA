@@ -11,4 +11,4 @@
 
 <b>Please reference this as:</b>
 
-Villacura-Herr, C. (2020). rESCMA: A brief summary on the conversion of effect sizes for meta-analysis.
+Villacura-Herr, C. & Kenner, N. (2020). rESCMA: A brief summary on the conversion of effect sizes for meta-analysis.
