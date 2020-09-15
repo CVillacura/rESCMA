@@ -228,7 +228,7 @@
                     output_variance_of_lnor.value = (output_variance_of_d.value * ((3.14159265359 * 3.14159265359) / 3)).toFixed(10);
                     break;
             }
-            copy_string.setAttribute('data-clipboard-text', `<table><tr><td>${output_correlation_coefficient.value}</td><td>${output_variance_of_r.value}</td><td>${output_standardized_mean_difference.value}</td><td>${output_variance_of_d.value}</td><td>${output_odds_ratio.value}</td><td>${output_natural_logarith_of_the_odds_ratio.value}</td><td>${output_variance_of_lnor.value}</td></tr></table>`);
+            copy_string.setAttribute('data-clipboard-text', `<table><tr><th>r</th><th>VAR_r</th><th>d</th><th>VAR_d</th><th>OR</th><th>LnOR</th><th>VAR_LnOR</th></tr><tr><td>${output_correlation_coefficient.value}</td><td>${output_variance_of_r.value}</td><td>${output_standardized_mean_difference.value}</td><td>${output_variance_of_d.value}</td><td>${output_odds_ratio.value}</td><td>${output_natural_logarith_of_the_odds_ratio.value}</td><td>${output_variance_of_lnor.value}</td></tr></table>`);
         }
     }
 
