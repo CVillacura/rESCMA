@@ -5,5 +5,5 @@
 ### Features 
 -Conversion among all three main effect sizes into each other.<br>-Simple bulk effect size conversion.<br>-Copy your sigle or bulk conversion results into a spreadsheet.
 
-### Please reference as:
+### Please cite as:
 Villacura-Herrera, C. & Kenner, N. (2020). rESCMA: A brief summary on the conversion of effect sizes for meta-analysis. <i>OSF Preprints</i>. <a href="http://doi.org/10.31219/osf.io/8np9d">doi.org/10.31219/osf.io/8np9d</a>
